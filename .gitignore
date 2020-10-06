@@ -1,0 +1,8 @@
+# virtual environment
+/venv
+
+# cache files
+/__pycache__
+
+# macOS files
+.DS_Store
