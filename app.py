@@ -1,11 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
+# @app.route('/templates/form.html')
+# def main(name=None):
+#    return render_template('form.html', name=name)
+
 @app.route('/')
-def helloWorld():
-    return "Hi"
+def home():
+   return render_template('form.html')
 
-
+if __name__ == '__main__':
+   app.run()
 
 
 # Add to and remove list
