@@ -1,13 +1,19 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+
 app = Flask(__name__)
 
-# @app.route('/templates/form.html')
-# def main(name=None):
-#    return render_template('form.html', name=name)
+@app.route('/', methods=["GET", "POST"])
+def displayForm():
+    if request.method == 'GET': 
+        return render_template('form.html')
+    else:
+        item = request.form['item']
+        qty = request.form['qty']
+        price = request.form['price']
+        return render_template('formReturn.html', item=item, qty=qty, price=price)
 
-@app.route('/')
-def home():
-   return render_template('form.html')
+
+
 
 if __name__ == '__main__':
    app.run()
