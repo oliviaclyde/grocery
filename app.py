@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
+from . import models 
+from .database import SessionLocal, engine
 
 app = Flask(__name__)
+
+models.Base.metadata.create_all(bind=engine)
 
 @app.route('/', methods=["GET", "POST"])
 def displayForm():
@@ -24,5 +28,7 @@ if __name__ == '__main__':
 # Security - cross-site request forgery / code injection
 
 
-# Action Item: Building a form template: item to purchase, qty, price, etc. When you render that template it displays and you can type into it
-# Action Item: Build a route that takes the form data and returns a displayed version (when you click submit flask will return rendered version in <p> <p>) 
+# Action Item: Figure out how to use instances of SessionLocal
+# Action Item: Figure out how to put an item into the db and read an item from the db 
+# Action Item: hook things together, we take form request, put item into db, get iteem from db and display in html page **Use code hints from Bri on slack**
+# Create instance of Session (SessionLocal) SQLAlchemy for creating objects/session and querying data w/i session 
