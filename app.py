@@ -1,22 +1,23 @@
 from flask import Flask, render_template, request, redirect, url_for
-from . import models 
+from . import models, crud
 from .database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
 
 app = Flask(__name__)
 
-models.Base.metadata.create_all(bind=engine)
 
 @app.route('/', methods=["GET", "POST"])
 def displayForm():
     if request.method == 'GET': 
         return render_template('form.html')
     else:
-        item = request.form['item']
+        name = request.form['name']
         qty = request.form['qty']
         price = request.form['price']
-        return render_template('formReturn.html', item=item, qty=qty, price=price)
-
-
+        db = SessionLocal()
+        dbItem = crud.createItem(db, name, qty, price)
+        return render_template('formReturn.html', item=dbItem)
 
 
 if __name__ == '__main__':
@@ -28,7 +29,7 @@ if __name__ == '__main__':
 # Security - cross-site request forgery / code injection
 
 
-# Action Item: Figure out how to use instances of SessionLocal
-# Action Item: Figure out how to put an item into the db and read an item from the db 
-# Action Item: hook things together, we take form request, put item into db, get iteem from db and display in html page **Use code hints from Bri on slack**
-# Create instance of Session (SessionLocal) SQLAlchemy for creating objects/session and querying data w/i session 
+
+# Action Item: Get items from db, templating to be able to display
+# Figure out how to build a template that displays an unknown number of items (0 - infinity) *Hint: Use if statment and for loop 
+# Make the return display asethically pleasing 
