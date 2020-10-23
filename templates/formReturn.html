@@ -1,6 +1,12 @@
 <!doctype html>
+   
+       
+{% for _ in listOfItems %}
 <card>
-    <p>{{ item.name }}</p>
-    <p>{{ item.qty }}</p>
-    <p>{{ item.price }}</p>    
-</card>
+    <p>Item: {{ _.name }}</p>
+    <p>Quantity: {{ _.qty }}</p>
+    <p>Price: {{ _.price }}</p>    
+</card>            
+{% endfor %}
+
+

@@ -17,7 +17,10 @@ def displayForm():
         price = request.form['price']
         db = SessionLocal()
         dbItem = crud.createItem(db, name, qty, price)
-        return render_template('formReturn.html', item=dbItem)
+        getItem = crud.getItem(db)
+        print(len(getItem))
+        # clearList = crud.deleteItem(db)
+        return render_template('formReturn.html', listOfItems=getItem)
 
 
 if __name__ == '__main__':

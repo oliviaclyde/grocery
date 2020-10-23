@@ -6,9 +6,19 @@ def createItem(db, name, qty, price):
     dbItem = models.Item(name=name, qty=qty, price=price, purchased=False)
     db.add(dbItem)
     db.commit()
-    db.refresh(dbItem)
+    # db.refresh(dbItem)
     db.close()
-    return dbItem
+    # return dbItem
+    # here we are returning the dbItem. We need to actually query the db
 
 def getItem(db):
-    return db.query(models.Item).all()
+    # for instance in db.query(models.Item):
+    #     return(instance.name, instance.qty, instance.price) 
+    itemList = db.query(models.Item).all()
+    for item in itemList:
+        print(item.name, item.qty, item.price)
+    return(itemList)
+
+def deleteItem(db):
+    removeItems = db.query(models.Item).delete()
+    db.commit()
