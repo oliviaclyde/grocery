@@ -1,12 +1,13 @@
-<!doctype html>
-   
-       
-{% for _ in listOfItems %}
-<card>
-    <p>Item: {{ _.name }}</p>
-    <p>Quantity: {{ _.qty }}</p>
-    <p>Price: {{ _.price }}</p>    
-</card>            
-{% endfor %}
-
+{% extends 'base.html' %}
+{% block title %}My List{% endblock %}
+{% block header %}My List{% endblock %}
+{% block content %}
+    {% for _ in listOfItems %}
+    <card>
+        <p>Item: {{ _.name }}</p>
+        <p>Quantity: {{ _.qty }}</p>
+        <p>Price: {{ _.price }}</p>    
+    </card>            
+    {% endfor %}
+{% endblock %}
 
