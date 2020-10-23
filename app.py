@@ -32,7 +32,17 @@ if __name__ == '__main__':
 # Security - cross-site request forgery / code injection
 
 
+# Action: #1 - Build functionality to mark item as purchased
+# #2 - Currenty only able to view list if we add an item, we need to be able to view the list without adding items (i.e. new route??)
+#      By default, only display unpurchased items by default (filter on purchased = false)
+#      Maybe index route should be a view of items currently in the database, link at the top of the form page to add a new item (dropdown menu, form appears toggle?)
+#      Use filter in query to only show unpurchased items
+#  #3 - Change default route to display first 10 items and if more click a link "Show me all unpurchased items" 
+#  https://fastapi.tiangolo.com/tutorial/sql-databases/#read-data   - skip/limit
+#  https://flask.palletsprojects.com/en/1.1.x/quickstart/#url-building  - link in the same route , have to pass in as an input , build a form to ask user how many items they want to see 
+# Keep track of when something is marked as purchased - time stamp can be stored in a property in the database, need to change things with models file 
+# When functionality is built out to show purchased vs unpurchased items: In templates, if purchased == true, then display
+# Data retention policy - always keep track of unpurchased items, user remove manually, only keep track of purchased items for 3 months - write idea for this policy and build functions around this
 
-# Action Item: Get items from db, templating to be able to display
-# Figure out how to build a template that displays an unknown number of items (0 - infinity) *Hint: Use if statment and for loop 
-# Make the return display asethically pleasing 
+
+# Add'l features to expand the app: add more tables to make specific list (link using Foreign Keys), or different users specific lists
