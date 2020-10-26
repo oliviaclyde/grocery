@@ -8,10 +8,14 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=["GET", "POST"])
+def home():
+    return render_template('index.html')
+
+@app.route('/form', methods=["GET", "POST"])
 def displayForm():
     if request.method == 'GET': 
         return render_template('form.html')
-    else:
+    elif request.method == 'POST':
         name = request.form['name']
         qty = request.form['qty']
         price = request.form['price']
@@ -39,7 +43,7 @@ if __name__ == '__main__':
 #      Use filter in query to only show unpurchased items
 #  #3 - Change default route to display first 10 items and if more click a link "Show me all unpurchased items" 
 #  https://fastapi.tiangolo.com/tutorial/sql-databases/#read-data   - skip/limit
-#  https://flask.palletsprojects.com/en/1.1.x/quickstart/#url-building  - link in the same route , have to pass in as an input , build a form to ask user how many items they want to see 
+#  https://flask.palletsprojects.com/en/1.1.x/quickstart/#url-building  - link in the same route , have to pass in as an input , build a form to ask user how many items they want to 
 # Keep track of when something is marked as purchased - time stamp can be stored in a property in the database, need to change things with models file 
 # When functionality is built out to show purchased vs unpurchased items: In templates, if purchased == true, then display
 # Data retention policy - always keep track of unpurchased items, user remove manually, only keep track of purchased items for 3 months - write idea for this policy and build functions around this
