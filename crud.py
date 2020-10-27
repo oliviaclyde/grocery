@@ -23,6 +23,7 @@ def getItem(db):
     return(itemList)
 
 def updateItem(db, item_update):
+    pass
     # Need to query which item was purchased that you are wanting to update
     # Change the items purchased attribute to true 
     # db.commit()
