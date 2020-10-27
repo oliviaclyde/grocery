@@ -7,7 +7,7 @@ models.Base.metadata.create_all(bind=engine)
 app = Flask(__name__)
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
 def home():
     return render_template('index.html')
 
@@ -33,6 +33,11 @@ def viewList():
         getItem = crud.getItem(db)
         return render_template('formReturn.html', listOfItems=getItem)
 
+@app.route('/clearlist')
+def clearList():
+    db = SessionLocal()
+    clearList = crud.deleteItem(db)
+    return render_template('index.html')
 
 if __name__ == '__main__':
    app.run()
