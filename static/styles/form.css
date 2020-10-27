@@ -56,7 +56,8 @@
 }
 
 .form-style input[type="submit"],
-.form-style input[type="reset"] {
+.form-style input[type="reset"],
+.form-style input[type="button"] {
 	position: relative;
 	display: block;
 	padding: 19px 39px 18px 39px;
@@ -73,6 +74,7 @@
 }
 
 .form-style input[type="submit"]:hover,
-.form-style input[type="clear"]:hover {
+.form-style input[type="reset"]:hover,
+.form-style input[type="button"]:hover {
 	background: #109177;
 }
