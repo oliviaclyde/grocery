@@ -2,6 +2,8 @@
 {% block title %}My List{% endblock %}
 {% block header %}My List{% endblock %}
 {% block content %}
+    <input type="button" onclick="window.history.back()" value="Go Back"/>
+    <input type="button" href="/" value="Home"/>
     {% for _ in listOfItems %}
     <card>
         <p>Item: {{ _.name }}</p>
