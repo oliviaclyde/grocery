@@ -26,6 +26,13 @@ def displayForm():
         # clearList = crud.deleteItem(db)
         return render_template('formReturn.html', listOfItems=getItem)
 
+@app.route('/viewlist', methods=["GET"])
+def viewList():
+    if request.method == 'GET':
+        db = SessionLocal()
+        getItem = crud.getItem(db)
+        return render_template('formReturn.html', listOfItems=getItem)
+
 
 if __name__ == '__main__':
    app.run()
