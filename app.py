@@ -31,7 +31,15 @@ def viewList():
     if request.method == 'GET':
         db = SessionLocal()
         getItem = crud.getItem(db)
+        # Need to filter for default return to be unpurchased items
         return render_template('formReturn.html', listOfItems=getItem)
+
+
+@app.route('/checkoff')
+def checkoff():
+    db = SessionLocal()
+    checkoffItem = crud.getItem(db)
+    return render_template('checkoff.html', listOfItems=checkoffItem)
 
 @app.route('/clearlist')
 def clearList():
