@@ -17,7 +17,7 @@ def createItem(db, name, qty, price):
 def getItem(db):
     # for instance in db.query(models.Item):
     #     return(instance.name, instance.qty, instance.price) 
-    itemList = db.query(models.Item).all()
+    itemList = db.query(models.Item).filter_by(purchased=False).all()
     for item in itemList:
         print(item.name, item.qty, item.price)
     return(itemList)
