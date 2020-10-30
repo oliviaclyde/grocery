@@ -3,7 +3,9 @@
 {% block content %}
     <h1>Checkoff Items You've Purchased: </h1>
     <input type="button" onclick="window.history.back()" value="Go Back"/>
-    <!-- {#<input type="button" action="{{ url_for('home') }}" method="GET" value="Go Back">#} -->
+    <form action="/">
+        <input type="submit" value="Home">
+    </form> 
     {% for _ in listOfItems %}
     <ul><input type="checkbox">  {{ _.name }}</ul> 
     {% endfor %}
