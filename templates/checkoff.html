@@ -6,8 +6,15 @@
     <form action="/">
         <input type="submit" value="Home">
     </form> 
-    {% for _ in listOfItems %}
-    <ul><input type="checkbox">  {{ _.name }}</ul> 
+    <ul>
+    {% for _ in list_of_items %}
+    <li>
+        <p>{{ _.name }}</p> 
+        <form action="/checkoff" method="post">
+            <input type="hidden" id="id" name="id" value="{{ _.id }}"/>
+            <input type="submit" value="Purchased!">
+        </form>
+    </li>
     {% endfor %}
-    <input type="submit" value="Update list">
+    </ul>
 {% endblock %}
