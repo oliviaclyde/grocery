@@ -12,7 +12,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/form', methods=["GET", "POST"])
-def displayForm():
+def display_form():
     if request.method == 'GET': 
         return render_template('form.html')
     elif request.method == 'POST':
@@ -20,31 +20,45 @@ def displayForm():
         qty = request.form['qty']
         price = request.form['price']
         db = SessionLocal()
-        dbItem = crud.createItem(db, name, qty, price)
-        getItem = crud.getItem(db)
-        print(len(getItem))
-        # clearList = crud.deleteItem(db)
-        return render_template('formReturn.html', listOfItems=getItem)
+        db_item = crud.create_item(db, name, qty, price)
+        get_item = crud.get_item(db)
+        print(len(get_item))
+        # clear_list = crud.delete_item(db)
+        return render_template('form_return.html', list_of_items=get_item)
 
 @app.route('/viewlist', methods=["GET"])
-def viewList():
+def view_list():
     if request.method == 'GET':
         db = SessionLocal()
-        getItem = crud.getItem(db)
+        get_item = crud.get_item(db)
         # Need to filter for default return to be unpurchased items
-        return render_template('formReturn.html', listOfItems=getItem)
+        return render_template('form_return.html', list_of_items=get_item)
 
 
-@app.route('/checkoff')
+@app.route('/checkoff', methods=["GET", "POST"])
 def checkoff():
-    db = SessionLocal()
-    checkoffItem = crud.getItem(db)
-    return render_template('checkoff.html', listOfItems=checkoffItem)
+    if request.method == "GET":
+        db = SessionLocal()
+        checkoff_item = crud.get_item(db)
+        # Need to have POST request update purchased attribute to 1 on items that have a box checked
+        return render_template('checkoff.html', list_of_items=checkoff_item)
+    elif request.method == "POST":
+        print(request.form)
+        id = request.form['id']
+        print(id)
+        db = SessionLocal()   
+        db_item = crud.update_item(db, id)
+        db = SessionLocal()
+        get_item = crud.get_item(db)
+        for item in get_item:
+            print(item.name)
+        return render_template('checkoff.html', list_of_items=get_item) 
+
 
 @app.route('/clearlist')
-def clearList():
+def clear_list():
     db = SessionLocal()
-    clearList = crud.deleteItem(db)
+    clear_list = crud.delete_item(db)
     return render_template('index.html')
 
 if __name__ == '__main__':
@@ -56,16 +70,28 @@ if __name__ == '__main__':
 # Security - cross-site request forgery / code injection
 
 
-# Action: #1 - Build functionality to mark item as purchased
-# #2 - Currenty only able to view list if we add an item, we need to be able to view the list without adding items (i.e. new route??)
-#      By default, only display unpurchased items by default (filter on purchased = false)
-#      Maybe index route should be a view of items currently in the database, link at the top of the form page to add a new item (dropdown menu, form appears toggle?)
-#      Use filter in query to only show unpurchased items
+
+# Action Item: 
+# Refine app to be more usable - styling, view history (be able to view WHEN you crossed something off)
+# Only purchase if $5 or less, How does my code solve my problem? How can I make it truely useful to me?
+# Connect to Kroger api https://developer.kroger.com/ to bring in pricing - alerts me to deals - Digital Coupon
+# Automated / unit tests on core functionality 
+# Sellenium - clicks links for me - testing from front end 
+# Naming consistency / code styling - CLEAN UP!!!! Organized / readable 
+# Flask email - always watching and looking for deals 
+# https://requests.readthedocs.io/en/master/
+# Where should this app lives in the cloud? Webserver https://flask.palletsprojects.com/en/1.1.x/deploying/ 
+# Package as docker to be able to deploy
+# 
+# NEVER COMMIT API KEYS - environment variables 
+#  
+
 #  #3 - Change default route to display first 10 items and if more click a link "Show me all unpurchased items" 
 #  https://fastapi.tiangolo.com/tutorial/sql-databases/#read-data   - skip/limit
 #  https://flask.palletsprojects.com/en/1.1.x/quickstart/#url-building  - link in the same route , have to pass in as an input , build a form to ask user how many items they want to 
 # Keep track of when something is marked as purchased - time stamp can be stored in a property in the database, need to change things with models file 
-# When functionality is built out to show purchased vs unpurchased items: In templates, if purchased == true, then display
+
+
 # Data retention policy - always keep track of unpurchased items, user remove manually, only keep track of purchased items for 3 months - write idea for this policy and build functions around this
 
 
