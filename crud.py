@@ -2,9 +2,9 @@ from sqlalchemy.orm import Session
 from . import models, database
 
 
-def createItem(db, name, qty, price):
-    dbItem = models.Item(name=name, qty=qty, price=price, purchased=False)
-    db.add(dbItem)
+def create_item(db, name, qty, price):
+    db_item = models.Item(name=name, qty=qty, price=price, purchased=False)
+    db.add(db_item)
     db.commit()
     # db.refresh(dbItem)
     db.close()
@@ -14,21 +14,24 @@ def createItem(db, name, qty, price):
 # Add createTime = datetime.utcnow(); from datetime import datetime, can use timedelta between when item was added and when marked purchased
 
 
-def getItem(db):
+def get_item(db):
     # for instance in db.query(models.Item):
     #     return(instance.name, instance.qty, instance.price) 
-    itemList = db.query(models.Item).filter_by(purchased=False).all()
-    for item in itemList:
-        print(item.name, item.qty, item.price)
-    return(itemList)
+    item_list = db.query(models.Item).filter_by(purchased=False).all()
+    for item in item_list:
+        print(item.name, item.qty, item.price, item.id)
+    db.close()
+    return(item_list)
 
-def updateItem(db, item_update):
-    pass
-    # Need to query which item was purchased that you are wanting to update
-    # Change the items purchased attribute to true 
-    # db.commit()
-    # db.close()
+def update_item(db, item_id):
+    db_item = db.query(models.Item).filter_by(id=item_id).first()
+    db_item.purchased = True
+    db.commit()
+    db.refresh(db_item)
+    db.close()
+    print(db_item)
+    return(db_item)
 
-def deleteItem(db):
-    removeItems = db.query(models.Item).delete()
+def delete_item(db):
+    remove_items = db.query(models.Item).delete()
     db.commit()
