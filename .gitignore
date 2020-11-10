@@ -9,3 +9,6 @@
 
 # db
 /*.db
+
+# environment variables
+.env
