@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}My List{% endblock %}
+{% block header %}My List{% endblock %}
+{% block content %}
+    <input type="button" onclick="window.history.back()" value="Go Back"/>
+    <form action="/">
+        <input type="submit" value="Home"/>
+    </form>
+    {% for _ in list_of_items %}
+    <card>
+        <p>Item: {{ _.name }}</p>
+        <p>Quantity: {{ _.qty }}</p>
+        <p>Price: {{ _.price }}</p>    
+    </card>            
+    {% endfor %}
+{% endblock %}
+
