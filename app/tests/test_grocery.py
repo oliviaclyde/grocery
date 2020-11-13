@@ -23,3 +23,9 @@ def client():
     os.close(db_fd)
     os.unlink(grocery.app.config['DATABASE'])
 
+
+def test_route_home():
+    print(dir(client))
+    response = client.get('/')
+    assert b"My Shopping List" in response.get_data
+    assert reponse.status_code == 200
