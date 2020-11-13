@@ -12,3 +12,8 @@
 
 # environment variables
 .env
+
+# cache files
+__pycache__
+_cache
+.*cache
