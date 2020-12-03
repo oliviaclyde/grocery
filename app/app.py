@@ -1,8 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for
 from . import models, crud
-from .database import SessionLocal, engine
+from .database import SessionLocal, choose_engine
+from flask import jsonify
+import sys
 
+
+if "pytest" in sys.modules:
+    env_mode = 'test'
+else:
+    env_mode = 'live'
+
+engine = choose_engine(env_mode)
 models.Base.metadata.create_all(bind=engine)
+db = SessionLocal(engine)
 
 app = Flask(__name__)
 
@@ -10,6 +20,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return render_template('index.html')
+    # return jsonify({"test": "Shopping"})
 
 @app.route('/form', methods=["GET", "POST"])
 def display_form():
@@ -19,7 +30,7 @@ def display_form():
         name = request.form['name']
         qty = request.form['qty']
         price = request.form['price']
-        db = SessionLocal()
+        # db = SessionLocal()
         db_item = crud.create_item(db, name, qty, price)
         get_item = crud.get_item(db)
         print(len(get_item))
@@ -29,7 +40,7 @@ def display_form():
 @app.route('/viewlist', methods=["GET"])
 def view_list():
     if request.method == 'GET':
-        db = SessionLocal()
+        # db = SessionLocal()
         get_item = crud.get_item(db)
         # Need to filter for default return to be unpurchased items
         return render_template('form_return.html', list_of_items=get_item)
@@ -38,7 +49,7 @@ def view_list():
 @app.route('/checkoff', methods=["GET", "POST"])
 def checkoff():
     if request.method == "GET":
-        db = SessionLocal()
+        # db = SessionLocal()
         checkoff_item = crud.get_item(db)
         # Need to have POST request update purchased attribute to 1 on items that have a box checked
         return render_template('checkoff.html', list_of_items=checkoff_item)
@@ -46,9 +57,9 @@ def checkoff():
         print(request.form)
         id = request.form['id']
         print(id)
-        db = SessionLocal()   
+        # db = SessionLocal()   
         db_item = crud.update_item(db, id)
-        db = SessionLocal()
+        # db = SessionLocal()
         get_item = crud.get_item(db)
         for item in get_item:
             print(item.name)
@@ -57,7 +68,7 @@ def checkoff():
 
 @app.route('/clearlist')
 def clear_list():
-    db = SessionLocal()
+    # db = SessionLocal()
     clear_list = crud.delete_item(db)
     return render_template('index.html')
 
